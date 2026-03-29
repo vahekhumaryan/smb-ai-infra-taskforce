@@ -1,0 +1,6 @@
+.env
+data/*
+!data/.gitkeep
+node_modules/
+.next/
+.DS_Store
