@@ -70,6 +70,7 @@ All three roles are described in detail in `CLAUDE.md`, which is written specifi
 | [`SPEC.md`](SPEC.md) | The technical spec. What makes an app deployment-ready. |
 | [`boilerplate/`](boilerplate/) | A working Python/Flask starter that follows the spec. Copy and build on it. |
 | [`CLAUDE.md`](CLAUDE.md) | Role-based workflows for AI assistants helping each team member. |
+| [`SKILLS-GUIDE.md`](SKILLS-GUIDE.md) | Bonus: how to create and share reusable Claude Code skills. |
 
 ## Stack
 
