@@ -6,16 +6,73 @@ A skill lets you save that workflow so you (or anyone on your team) can re-run i
 
 ---
 
-## What a Skill Looks Like
+## I Just Got a Great Result — Now What?
 
-It's just a text file in a specific folder. That's it.
+Right there in the same session, tell Claude:
+
+> That was perfect. Save this as a reusable skill called "summarize-notes" that I can share with my team. Put it in `.claude/skills/summarize-notes/SKILL.md`.
+
+Claude will create the skill file for you — capturing the instructions that made it work. You don't need to write anything yourself.
+
+If you want to refine it afterward, you can always edit the `SKILL.md` file or tell Claude to adjust it.
+
+---
+
+## Sharing a Skill with a Colleague
+
+Once Claude creates the skill, you'll have a folder like this:
 
 ```
 .claude/skills/summarize-notes/
 └── SKILL.md
 ```
 
-And `SKILL.md` is just your instructions written out:
+To share it, just send your colleague the folder. You can:
+- Zip it and send via Slack/email
+- Commit it to a shared git repo
+- Drop it in a shared drive
+
+That's it. One folder, one file.
+
+---
+
+## I Received a Skill — How Do I Use It?
+
+Someone sent you a skill folder (or you found one in a repo). Here's how to install it:
+
+**Option A: For one project**
+
+Drop the folder into your project:
+
+```
+my-project/.claude/skills/summarize-notes/SKILL.md
+```
+
+The skill is now available whenever you work in that project.
+
+**Option B: For all your projects**
+
+Drop the folder into your personal skills directory:
+
+```
+~/.claude/skills/summarize-notes/SKILL.md
+```
+
+The skill is now available everywhere on your machine.
+
+**Then just use it:**
+
+```
+/summarize-notes
+```
+
+That's all. No installation, no configuration. Claude picks it up automatically.
+
+---
+
+## What a Skill Looks Like Inside
+
+If you're curious, `SKILL.md` is just a text file with instructions:
 
 ```markdown
 ---
@@ -29,90 +86,19 @@ Take the meeting notes I provide and produce:
 2. A bulleted list of decisions made
 3. A bulleted list of action items with owners and deadlines
 
-Keep it concise. Use the exact names of people mentioned. If a deadline isn't stated, write "TBD".
+Keep it concise. Use the exact names of people mentioned.
+If a deadline isn't stated, write "TBD".
 ```
 
-Now anyone can type `/summarize-notes` and get the same result you got.
+The `---` block at the top tells Claude the slash command name and when to suggest it. Everything below is the actual instructions.
+
+You can edit this file anytime to tweak the behavior.
 
 ---
 
-## How to Create One
+## Tips
 
-**Step 1:** You just did something that worked well in Claude. Before you close the session, think: what were the key instructions that made this work?
-
-**Step 2:** Create the folder and file:
-
-```bash
-mkdir -p .claude/skills/my-skill-name
-```
-
-**Step 3:** Write the `SKILL.md` with your instructions. Be specific — write it the way you'd explain the task to a smart colleague who has never done it before.
-
-**Step 4:** Test it by typing `/my-skill-name` in a new session.
-
----
-
-## Where to Put It
-
-| Location | Who can use it |
-|----------|---------------|
-| `my-project/.claude/skills/` | Anyone working in this project |
-| `~/.claude/skills/` | Just you, across all your projects |
-
-For team use, commit the `.claude/skills/` folder to your project's git repo. Everyone who clones the repo gets the skills automatically.
-
----
-
-## Tips for Writing Good Skills
-
-**Be specific, not clever.** Write out the exact steps. If your a-ha moment was "oh, I need to ask Claude to check for X before doing Y" — put that in the skill.
-
-**Include examples if it helps.** You can add example inputs/outputs right in the `SKILL.md`:
-
-```markdown
-## Example
-
-Input: "Q3 planning meeting - John said we should delay the launch to October..."
-
-Output:
-**Summary:** The team discussed Q3 timelines and agreed to push the launch to October.
-**Decisions:** Launch delayed to October (proposed by John, agreed by all)
-**Action items:** John — update roadmap by Friday
-```
-
-**Add supporting files if needed.** Put templates, reference docs, or example configs next to `SKILL.md` in the same folder. Claude can read them.
-
-```
-.claude/skills/my-skill/
-├── SKILL.md
-├── template.md
-└── example-output.md
-```
-
----
-
-## The Frontmatter
-
-The `---` block at the top of `SKILL.md` just needs two things:
-
-```yaml
----
-name: my-skill-name
-description: When should Claude suggest this skill.
----
-```
-
-- **name** — becomes the slash command (`/my-skill-name`)
-- **description** — Claude reads this to know when to suggest the skill on its own
-
-If you only want the skill to run when someone explicitly types the slash command (not auto-suggested), add:
-
-```yaml
----
-name: my-skill-name
-description: What this does.
-disable-model-invocation: true
----
-```
-
-That's all you need to know.
+- **Be specific.** The best skills read like instructions for a smart colleague who has never done the task before.
+- **Include examples.** If the output format matters, show a sample input and output right in the skill.
+- **Add supporting files.** Templates, reference docs, or examples can live next to `SKILL.md` in the same folder. Claude will read them.
+- **Test it.** After creating or installing a skill, open a new session and try the slash command to make sure it works the way you expect.
