@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block title %}Settings{% endblock %}
+{% block head %}
+<style>
+    .form { display: flex; flex-direction: column; gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    .field label { font-size: 14px; font-weight: 500; }
+    .field input, .field textarea {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+    .field textarea { font-family: monospace; resize: vertical; }
+    button {
+        padding: 10px 20px;
+        background: #111;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        margin-top: 8px;
+    }
+    .saved { color: #16a34a; font-size: 14px; margin-bottom: 16px; }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>Settings</h1>
+    <p class="muted">These are saved on the server and persist across restarts.</p>
+
+    {% if saved %}
+    <p class="saved" id="saved-msg">Settings saved.</p>
+    <script>setTimeout(function(){ document.getElementById('saved-msg').style.display='none'; }, 2000);</script>
+    {% endif %}
+
+    {% if not settings %}
+    <p class="muted">No runtime settings needed. All config comes from environment variables.</p>
+    {% else %}
+    <form method="POST" class="form">
+        {% for s in settings %}
+        <div class="field">
+            <label>{{ s.label }}</label>
+            {% if s.type == "textarea" %}
+            <textarea name="{{ s.key }}" placeholder="{{ s.placeholder }}" rows="6">{{ values.get(s.key, '') }}</textarea>
+            {% else %}
+            <input type="{{ s.type }}" name="{{ s.key }}" placeholder="{{ s.placeholder }}" value="{{ values.get(s.key, '') }}">
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit">Save settings</button>
+    </form>
+    {% endif %}
+
+    <br>
+    <a href="/">&larr; Back to app</a>
+{% endblock %}

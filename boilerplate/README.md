@@ -19,4 +19,4 @@ First launch will ask you to configure settings (if any).
 
 ## Deploy
 
-Push to Gitea → Coolify auto-deploys → set env vars in Coolify UI.
+Push to GitHub → Coolify auto-deploys → set env vars in Coolify UI.

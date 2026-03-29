@@ -1,44 +1,95 @@
-# Deploy-Ready App Infrastructure
+# SMB AI Infra Taskforce
 
-A spec and boilerplate for building web apps that run identically on localhost and VPS. Designed for people building apps with AI coding assistants.
+**Make vibe-coded apps actually usable by other people.**
 
-Point your AI agent at this repo and tell it: **"Follow SPEC.md to make my app deployment-ready."**
+## Why This Exists
 
-## Two Workflows
+AI coding assistants make it easy to build working apps fast. The harder part comes after — when someone else needs to run it, or when it's time to move off localhost and onto a server.
 
-### Start from scratch
+Most vibe-coded apps end up as zip files passed around on Slack. They work on the original machine but break everywhere else: wrong runtime version, missing dependencies, hardcoded paths, secrets in the source. Deploying them for the team to use becomes a separate project entirely.
 
-```bash
-cp -r boilerplate/ my-new-app
-cd my-new-app
-cp .env.example .env
-# edit .env with your keys
-docker compose up
-# open http://localhost:3000
-```
+## The Fix
 
-### Convert an existing app
+This repo is a spec, a starter template, and a set of AI-guided workflows for three roles. Follow the spec, and your app:
 
-Have your AI agent read `SPEC.md` (specifically the "Conversion Checklist" section) and apply it to your existing codebase.
+- Runs with one command: `docker compose up`
+- Works the same on your Mac, your colleague's Windows PC, and a VPS
+- Has a settings page so users configure it from a browser, not by editing files
+- Doesn't conflict with other apps when you run ten of them on the same server
 
-## What's In This Repo
+In other words — you build it once, and anyone can run it anywhere without asking you how.
 
-| File | Purpose |
-|------|---------|
-| `SPEC.md` | The rules. Every deployment-ready app must follow this. |
-| `boilerplate/` | A working Next.js starter that follows the spec. Copy it. |
-| `CLAUDE.md` | Instructions for AI coding agents working with this repo. |
+## Three Roles, One Workflow
+
+Every person involved uses their own AI coding assistant (Claude Code, Cursor, etc.) and points it at this repo. The AI handles the technical details.
+
+### 1. The Vibe Coder (builds the app)
+
+You're building an app with your AI assistant. Tell it:
+
+> Read SPEC.md from [this repo URL] and make sure my app follows it. When I'm done, push it to a private GitHub repo.
+
+The AI will:
+- Structure your app to match the spec (or convert your existing app)
+- Create a private GitHub repo and push your code
+- Handle all git operations — you never need to touch git yourself
+- On future sessions, push your updates to the same repo
+
+When your app is ready for others to use, share the GitHub repo URL.
+
+### 2. The Colleague (runs their own copy)
+
+Someone shared an app repo URL with you and you want to run it locally or deploy your own instance. Tell your AI assistant:
+
+> I want to run this app: [GitHub repo URL]. Read SPEC.md from [this repo URL] and help me set it up.
+
+The AI will:
+- Clone the repo
+- Walk you through creating the `.env` file (asking you for any API keys needed)
+- Run `docker compose up`
+- If the app has a settings page, tell you to open it and configure
+
+### 3. The VPS Admin (deploys apps for the team)
+
+You manage the VPS and someone sent you a repo URL to deploy. Tell your AI assistant:
+
+> I need to deploy this app on our VPS via Coolify: [GitHub repo URL]. Read SPEC.md from [this repo URL] for the deployment process.
+
+The AI will:
+- Guide you through connecting the GitHub repo to Coolify
+- Help you set environment variables (asking you for credentials as needed)
+- Deploy the app
+- Set up auto-deploy so future pushes go live automatically
+
+All three roles are described in detail in `CLAUDE.md`, which is written specifically for AI assistants to follow.
+
+## What's in the Box
+
+| File | What it is |
+|------|------------|
+| [`SPEC.md`](SPEC.md) | The technical spec. What makes an app deployment-ready. |
+| [`boilerplate/`](boilerplate/) | A working Python/Flask starter that follows the spec. Copy and build on it. |
+| [`CLAUDE.md`](CLAUDE.md) | Role-based workflows for AI assistants helping each team member. |
 
 ## Stack
 
-- **Next.js 15** (App Router, standalone output)
-- **Docker Compose** (the only way to run apps)
-- **Node 20 Alpine** (multi-stage Dockerfile)
-- **Coolify** (VPS deployment platform)
+- **Python 3.12 + Flask** for the app
+- **Docker Compose** for running everything
+- **GitHub** for private repos (AI handles all git)
+- **Coolify** on VPS for deployment
 
-## Core Principles
+## Principles
 
-- One command to run: `docker compose up`
-- Same setup locally and on VPS — zero code changes to deploy
-- All user-facing config through a GUI settings page, not file editing
-- Multiple apps on one VPS don't conflict (automatic isolation via Docker Compose project scoping)
+- **One command to run.** `docker compose up`. Locally and in production.
+- **Zero code changes to deploy.** The same docker-compose.yml works everywhere.
+- **GUI for all settings.** Users configure the app from a browser, never by editing `.env` or restarting containers.
+- **No conflicts.** Multiple apps on one server are automatically isolated.
+- **AI-first.** Every team member uses an AI assistant. The spec and workflows are written for AI to read and execute.
+
+## Contributing
+
+If you've been bitten by the "works on my machine" problem with vibe-coded apps, PRs and ideas are welcome.
+
+## License
+
+MIT

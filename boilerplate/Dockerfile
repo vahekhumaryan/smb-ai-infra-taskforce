@@ -1,22 +1,8 @@
-FROM node:20-alpine AS deps
+FROM python:3.12-slim
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-RUN npm run build
-
-FROM node:20-alpine AS runner
-WORKDIR /app
-ENV NODE_ENV=production
-RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
-RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data
-USER nextjs
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY src/ ./src/
+RUN mkdir -p /app/data
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["gunicorn", "--bind", "0.0.0.0:3000", "--chdir", "src", "app:app"]

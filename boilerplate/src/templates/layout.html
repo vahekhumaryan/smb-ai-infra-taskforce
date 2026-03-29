@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}App{% endblock %}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, -apple-system, sans-serif; color: #111; }
+        .container { max-width: 520px; margin: 60px auto; padding: 0 20px; }
+        h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+        .muted { color: #666; font-size: 14px; margin-bottom: 24px; }
+        a { color: #666; font-size: 14px; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
