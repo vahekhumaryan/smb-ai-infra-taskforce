@@ -4,7 +4,13 @@ You just had an a-ha moment in Claude. Maybe you figured out the perfect way to 
 
 A skill lets you save that workflow so you (or anyone on your team) can re-run it with a single slash command.
 
+> **Note:** Skills are a Claude Code feature (CLI, Desktop app, or claude.ai/code). They don't work in regular Claude chat or other AI assistants.
+
+&nbsp;
+
 ---
+
+&nbsp;
 
 ## I Just Got a Great Result — Now What?
 
@@ -14,13 +20,21 @@ Right there in the same session, tell Claude:
 
 Claude will install the skill and put a copy on your Desktop. Now you can type `/summarize-notes` anytime to get the same result, and you have a file ready to send to a colleague.
 
+&nbsp;
+
 ---
+
+&nbsp;
 
 ## Sharing a Skill with a Colleague
 
 You'll find the skill file on your Desktop. Send it to your colleague — Slack, email, whatever works.
 
+&nbsp;
+
 ---
+
+&nbsp;
 
 ## I Received a Skill — How Do I Use It?
 

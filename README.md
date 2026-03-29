@@ -2,11 +2,15 @@
 
 **Make vibe-coded apps actually usable by other people.**
 
+&nbsp;
+
 ## Why This Exists
 
 AI coding assistants make it easy to build working apps fast. The harder part comes after — when someone else needs to run it, or when it's time to move off localhost and onto a server.
 
 Most vibe-coded apps end up as zip files passed around on Slack. They work on the original machine but break everywhere else: wrong runtime version, missing dependencies, hardcoded paths, secrets in the source. Deploying them for the team to use becomes a separate project entirely.
+
+&nbsp;
 
 ## The Fix
 
@@ -19,9 +23,13 @@ This repo is a spec, a starter template, and a set of AI-guided workflows for th
 
 In other words — you build it once, and anyone can run it anywhere without asking you how.
 
+&nbsp;
+
 ## Three Roles, One Workflow
 
 Every person involved uses their own AI coding assistant (Claude Code, Cursor, etc.) and points it at this repo. The AI handles the technical details.
+
+&nbsp;
 
 ### 1. The Vibe Coder (builds the app)
 
@@ -37,6 +45,8 @@ The AI will:
 
 When your app is ready for others to use, share the GitHub repo URL.
 
+&nbsp;
+
 ### 2. The Colleague (runs their own copy)
 
 Someone shared an app repo URL with you and you want to run it locally or deploy your own instance. Tell your AI assistant:
@@ -48,6 +58,8 @@ The AI will:
 - Walk you through creating the `.env` file (asking you for any API keys needed)
 - Run `docker compose up`
 - If the app has a settings page, tell you to open it and configure
+
+&nbsp;
 
 ### 3. The VPS Admin (deploys apps for the team)
 
@@ -63,6 +75,8 @@ The AI will:
 
 All three roles are described in detail in `CLAUDE.md`, which is written specifically for AI assistants to follow.
 
+&nbsp;
+
 ## What's in the Box
 
 | File | What it is |
@@ -72,12 +86,16 @@ All three roles are described in detail in `CLAUDE.md`, which is written specifi
 | [`CLAUDE.md`](CLAUDE.md) | Role-based workflows for AI assistants helping each team member. |
 | [`SKILLS-GUIDE.md`](SKILLS-GUIDE.md) | Bonus: how to create and share reusable Claude Code skills. |
 
+&nbsp;
+
 ## Stack
 
 - **Python 3.12 + Flask** for the app
 - **Docker Compose** for running everything
 - **GitHub** for private repos (AI handles all git)
 - **Coolify** on VPS for deployment
+
+&nbsp;
 
 ## Principles
 
@@ -87,9 +105,13 @@ All three roles are described in detail in `CLAUDE.md`, which is written specifi
 - **No conflicts.** Multiple apps on one server are automatically isolated.
 - **AI-first.** Every team member uses an AI assistant. The spec and workflows are written for AI to read and execute.
 
+&nbsp;
+
 ## Contributing
 
 If you've been bitten by the "works on my machine" problem with vibe-coded apps, PRs and ideas are welcome.
+
+&nbsp;
 
 ## License
 
