@@ -10,33 +10,24 @@ A skill lets you save that workflow so you (or anyone on your team) can re-run i
 
 Right there in the same session, tell Claude:
 
-> That was perfect. Save this as a reusable skill called "summarize-notes" that I can share with my team. Put it in `.claude/skills/summarize-notes/SKILL.md`.
+> That was perfect. Save this as a reusable skill called "summarize-notes" so I can reuse it with a slash command. Also copy the skill file to my Desktop so I can easily share it with others.
 
-Claude will create the skill file for you. You don't need to write anything yourself.
-
-Now you can type `/summarize-notes` anytime to get the same result.
+Claude will install the skill and put a copy on your Desktop. Now you can type `/summarize-notes` anytime to get the same result, and you have a file ready to send to a colleague.
 
 ---
 
 ## Sharing a Skill with a Colleague
 
-You'll have a folder like:
-
-```
-.claude/skills/summarize-notes/
-└── SKILL.md
-```
-
-Send your colleague the `SKILL.md` file — Slack, email, whatever works.
+You'll find the skill file on your Desktop. Send it to your colleague — Slack, email, whatever works.
 
 ---
 
 ## I Received a Skill — How Do I Use It?
 
-Someone sent you a `SKILL.md` file. Give it to Claude:
+Someone sent you a skill file. Tell Claude:
 
-> Here's a skill file my colleague shared with me. Install it so I can use it as a slash command.
+> Here's a skill file my colleague shared with me. Install it so I can use it as a slash command, and also save a copy to my Desktop in case I want to share it with someone else.
 
-Paste the file contents or attach it. Claude will put it in the right place.
+Paste the file contents or attach it. Claude will handle the rest.
 
 Then just type `/skill-name` to use it.
