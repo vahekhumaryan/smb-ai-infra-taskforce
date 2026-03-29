@@ -75,10 +75,10 @@ Copy the skill folder into one of these locations:
 
 ### From a plugin
 
-If the skill is packaged as a plugin:
+If the skill is packaged as a plugin and published to a marketplace:
 
 ```
-/plugin install <url>
+/plugin install plugin-name@marketplace-name
 ```
 
 ---
@@ -106,26 +106,69 @@ my-app/
 For skills that should be available across multiple projects:
 
 1. Create a plugin repository with a `skills/` directory
-2. Team members install it: `/plugin install <repo-url>`
+2. Add it to a plugin marketplace (custom or official)
+3. Team members install it: `/plugin install my-plugin@my-marketplace`
 
 ### Option C: Organization-wide via managed settings
 
-For enforcing skills across all team members:
+For enforcing skills across all team members (requires Claude Teams or Enterprise plan):
 
-1. Package skills as a plugin
-2. Distribute via a plugin marketplace (custom or official)
-3. Use `server-managed-settings.json` to control access:
+1. Package skills as a plugin and publish to a marketplace
+2. In the Claude.ai admin console, configure managed settings to control access
+3. Permission rules for skills follow this pattern:
 
-```json
-{
-  "permissions": {
-    "allow": ["Skill(deploy-check)"],
-    "deny": ["Skill(dangerous-skill)"]
-  }
-}
+```
+Skill(deploy-check)     # allow or deny a specific skill
+Skill(dangerous-skill)  # deny rules take precedence over allow
 ```
 
-This ensures the skill is available (or blocked) for everyone in the organization without relying on individual setup.
+Note: deny rules always take precedence over allow rules.
+
+---
+
+## Advanced Features
+
+### String substitutions
+
+Skills support dynamic variables in their content:
+
+| Variable | What it contains |
+|----------|-----------------|
+| `$ARGUMENTS` | Everything the user typed after the slash command |
+| `$ARGUMENTS[0]`, `$ARGUMENTS[1]` | Individual space-separated arguments |
+| `${CLAUDE_SKILL_DIR}` | Path to the skill's own directory (useful for referencing supporting files) |
+| `${CLAUDE_SESSION_ID}` | Current session ID |
+
+### Run in a forked context
+
+Add `context: fork` to run the skill in a subagent that doesn't pollute the main conversation:
+
+```yaml
+---
+name: my-skill
+description: Does something in isolation
+context: fork
+---
+```
+
+### Limit to specific paths
+
+Use the `paths` field to only activate a skill when working in certain directories (useful for monorepos):
+
+```yaml
+---
+name: my-skill
+paths: ["src/backend/**"]
+---
+```
+
+### Dynamic context injection
+
+Use shell command syntax to inject dynamic content when the skill loads:
+
+```markdown
+Current git branch: !`git branch --show-current`
+```
 
 ---
 
@@ -149,12 +192,14 @@ These can be built by adding folders to `.claude/skills/` in this repo.
 
 ```yaml
 ---
-name: skill-name              # used as the slash command: /skill-name
-description: When to use this  # Claude reads this to decide relevance
-disable-model-invocation: true # optional: only run when user types /skill-name
+name: skill-name                  # slash command: /skill-name
+description: When to use this     # Claude reads this to decide relevance
+disable-model-invocation: true    # only run when user types /skill-name
+user-invocable: true              # show in slash command list (default: true)
+allowed-tools: ["Read", "Bash"]   # restrict which tools the skill can use
+context: fork                     # run in isolated subagent context
+paths: ["src/**"]                 # only activate in matching directories
 ---
 ```
 
-- `name` — the slash command name
-- `description` — helps Claude decide when to suggest the skill; make it specific
-- `disable-model-invocation` — set to `true` for skills that should only run when explicitly invoked, not auto-suggested
+All fields except `name` are optional.
