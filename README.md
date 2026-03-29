@@ -1,4 +1,4 @@
-# SMB AI Infra Taskforce
+# SMB AI Infra Taskforce 
 
 **Make vibe-coded apps actually usable by other people.**
 
